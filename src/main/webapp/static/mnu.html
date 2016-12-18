@@ -1,0 +1,10 @@
+ 
+ <div class="dropdown" ng-controller="MenuController" ng-init="menuItems()">
+  <div ng-repeat="menuItem in menu.subMenus" style="float:left">
+  <button  ng-click="dropDown($index)" class="dropbtn" ng-if="menuItem.link == undefined">{{menuItem.name}}</button>
+   <button  ng-click="goTo(menuItem.link)" class="dropbtn" ng-if="menuItem.link != undefined">{{menuItem.name}}</button>
+  <div id="dd{{$index}}" class="dropdown-content" >
+    <a ng-repeat="submenuItem in menuItem.subMenus" href="{{submenuItem.link}}">{{submenuItem.name}}</a>
+  
+  </div>  
+  </div>

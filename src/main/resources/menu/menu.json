@@ -1,0 +1,44 @@
+{
+"name":"Menu",
+"roles":["admin","user"],
+"subMenus":[
+	{
+		"name": "User",
+		"subMenus": [
+			{
+				"name": "List",
+				"link": "/vb/usr.html?view=user_list",
+				"roles":["admin"]
+			},
+			{
+				"name": "Register",
+				"link": "/vb/usr.html?view=user_save",
+				"roles":["admin","user"]
+			}
+		],
+		"roles":["admin","user"]
+	},
+		{
+		"name": "Channels",
+		"subMenus": [
+			{
+				"name": "List",
+				"link": "/vb/channel.html?view=user_list",
+				"roles":["admin","user"]
+			},
+			{
+				"name": "Add Channel",
+				"link": "/vb/channel.html?view=user_save",
+				"roles":["admin","user"]
+			}
+		],
+		"roles":["admin","user"]
+	},
+			{
+		"name": "Logout",
+		"link":"/vb/logout ",
+		"subMenus": [],
+		"roles":["admin","user"]
+	}
+]
+}
