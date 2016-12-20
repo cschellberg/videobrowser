@@ -13,5 +13,4 @@
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	<context:component-scan base-package="com.eliga.videobrowser" />
     <jpa:repositories base-package="com.eliga.videobrowser" />
-
 </beans>

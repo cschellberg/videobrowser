@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -28,10 +29,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 		logger.info("configuring httpsecurity request");
     	httpSecurity.csrf().disable().authorizeRequests().
- 		antMatchers("/admin/**").hasAuthority(ROLE.admin.toString()).
+  		antMatchers("/admin/**").hasAuthority(ROLE.admin.toString()).
  		anyRequest().authenticated(). 
-		and().formLogin();
-    	//;.loginPage("/login.html").permitAll();
+		and().formLogin().loginPage("/login.html").defaultSuccessUrl("/usr.html").
+		failureUrl("/loginfailure.html").loginProcessingUrl("/perform_login");
+    }
+
+	@Override
+	public void configure(WebSecurity webSecurity) throws Exception {
+		webSecurity.ignoring().antMatchers("/css/*.css").
+		antMatchers("/js/*.js").antMatchers("/login.html").antMatchers("/home.html").antMatchers("/loginfailure.html");
     }
 
     @Autowired

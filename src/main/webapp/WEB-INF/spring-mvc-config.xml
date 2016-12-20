@@ -13,5 +13,6 @@
 	<context:component-scan base-package="com.eliga.videobrowser.web" />
   <mvc:resources mapping="/**" location="/static/" />
 	<mvc:annotation-driven />
+	<mvc:view-controller path="/login" />  
  
 </beans>

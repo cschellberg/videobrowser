@@ -89,5 +89,11 @@ public class UserController {
 		}
 		return retList;
 	}
+	
+
+ /*   @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login.html";
+    }*/
 
 }
