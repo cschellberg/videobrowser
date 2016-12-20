@@ -1,17 +1,20 @@
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
+ // if (!event.target.matches('.dropbtn')) {
+    var buttonParentId = event.srcElement.parentElement.id;
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
+      var dropdownParentId = openDropdown.parentElement.id;
+      if (openDropdown.classList.contains('show') && (buttonParentId != dropdownParentId)) {
         openDropdown.classList.remove('show');
       }
     }
-  }
+// } 
 }
+
+
 
 function pickView() {
 	var locationUrl = window.location.search;
