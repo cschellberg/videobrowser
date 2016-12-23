@@ -11,7 +11,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import com.eliga.videobrowser.model.Channel;
 import com.eliga.videobrowser.model.User;
+import com.eliga.videobrowser.model.Video;
 import com.eliga.videobrowser.types.ROLE;
 import com.google.gson.Gson;
 
@@ -22,12 +24,13 @@ public class VideoBrowserTester {
 			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 			CloseableHttpClient client = httpClientBuilder.build();
 
-				HttpPost httpPost = new HttpPost("http://localhost:8080/vb/login");
+			HttpPost httpPost = new HttpPost("http://localhost:8080/vb/perform_login");
 			String loginStr="username=dschellberg&password=blah";
 			HttpEntity entity = new StringEntity(loginStr);
 			httpPost.setEntity(entity);
 			HttpResponse response=client.execute(httpPost);
-			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
+			String responseStr = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+			System.out.println(responseStr);
 			
 			httpPost = new HttpPost("http://localhost:8080/vb/user");
 			User user = new User();
@@ -61,13 +64,32 @@ public class VideoBrowserTester {
 			response=client.execute(httpPost);
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
-			String url = "http://localhost:8080/vb/user/list";
+			String url = "http://localhost:8080/vb/admin/user/list";
 			HttpGet request = new HttpGet(url);
 			request.addHeader("accept", "application/json");
 			request.addHeader("content-type", "application/json");
 			response = client.execute(request);
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
+
+			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			Channel channel = new Channel();
+			channel.setName("Test Channel");
+			Video video=new Video();
+			video.setName("videoname");
+			video.setLink("videolink");
+			channel.getVideos().add(video);
+			httpPost.addHeader("accept", "application/json");
+			httpPost.addHeader("content-type", "application/json");
+			gson = new Gson();
+			jsonStr = gson.toJson(channel);
+			entity = new StringEntity(jsonStr);
+			httpPost.setEntity(entity);
+			response=client.execute(httpPost);
+			responseStr=IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+			System.out.println(responseStr);
+
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

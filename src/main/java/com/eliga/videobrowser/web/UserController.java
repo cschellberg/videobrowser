@@ -44,6 +44,10 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value = "/reg", method = RequestMethod.POST)
+	public @ResponseBody Result registerUser(@RequestBody User user) throws Exception {
+		return saveUser(user);
+	}
 	private void validate(User user) throws Exception {
 		if ( StringUtils.isBlank(user.getFirstName())){
 			throw new Exception("First Name is required");
@@ -65,12 +69,14 @@ public class UserController {
 
 
 	@RequestMapping(value = "/admin/user/delete/{username:.+}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteUser(@PathVariable("username") String username) {
+	public @ResponseBody Result deleteUser(@PathVariable("username") String username) {
 		User user=userRepository.findByUsername(username);
 		if ( user != null){
 		userRepository.delete(user);
-		}		
-		return "success";
+		return new Result(0,"success");
+		}else {		
+		return new Result(1,"No user found for "+username);
+		}
 	}
 
 	@RequestMapping(value = "/user/deleteAll", method = RequestMethod.GET)

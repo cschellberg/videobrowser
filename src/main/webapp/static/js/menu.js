@@ -28,13 +28,39 @@ function pickView() {
 			view = viewParamParts[1];
 		}
 	}
-	if (view == "user_list" || view == "user_save") {
 		viewElement = document.getElementById(view);
+		if ( viewElement != null ){
 		viewElement.style.visibility = "visible";
+		}
+   paramIndex = locationUrl.indexOf("errorMessage");
+	if (paramIndex >= 0) {
+		var errorParam = locationUrl.split("&")[1];
+		var errorParamParts = errorParam.split("=");
+		if (errorParamParts.length > 1) {
+			errorMessage = decodeURIComponent(errorParamParts[1]);
+		    document.getElementById("errorMessage").innerHTML=errorMessage;
+		}
+
 	}
 }
 
 var userApp = angular.module("userApp", []);
+
+userApp.controller('AnonymousMenuController', function($scope, $http) {
+	$scope.menuItems = function() {
+		$http.get("/vb/anonymousMenu").then(function mySuccess(response) {
+			$scope.menu = response.data;
+		}, function myError(response) {
+			$scope.menu = response.text;
+		});
+	}
+	$scope.dropDown= function (index) {
+	    document.getElementById('dd'+index).classList.toggle("show");
+	}
+	$scope.goTo= function (url) {
+	    window.location.href=url;
+	}
+});
 
 userApp.controller('MenuController', function($scope, $http) {
 	$scope.menuItems = function() {

@@ -15,19 +15,19 @@
 		}
 		$scope.delete = function(username) {
 			$http.delete("/vb/admin/user/delete/"+username).then(function mySuccess(response) {
-				window.location.reload();
-				$scope.listResponse = response.data;
+				if ( response.data.code ==  0){
+					window.location.reload();
+					}
+					else {
+				$scope.listResponse = response.data.errors;
+					}
 			}, function myError(response) {
-				window.location.reload();
 				$scope.listResponse = response.statusText;
 			});
 		}
 	});
 
 	userApp.controller('UserSaveController', function($scope, $http) {
-		$scope.reset = function() {
-			alert("test");
-		}
 		$scope.save = function(user) {
 			$scope.saveResponse="";
 			var url="/vb/user"
@@ -89,8 +89,7 @@
 				<tr><td><label>Last Name: <input type="text" ng-model="user.lastName" /></label></td></tr> 
 				<tr><td><label>User Name: <input type="text" ng-model="user.username" /></label></td></tr> 
 				<tr><td><label>Password: <input type="text" ng-model="user.password" /></label></td></tr> 
-				<tr><td><input type="button" ng-click="reset()" value="Reset" /> 
-				<input type="button"  ng-click="save(user)" value="Save" /></td></tr>
+				<tr><td><input type="button"  ng-click="save(user)" value="Save" /></td></tr>
 			</table>	
 			</form>
 		</div>

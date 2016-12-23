@@ -30,15 +30,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		logger.info("configuring httpsecurity request");
     	httpSecurity.csrf().disable().authorizeRequests().
   		antMatchers("/admin/**").hasAuthority(ROLE.admin.toString()).
- 		anyRequest().authenticated(). 
-		and().formLogin().loginPage("/login.html").defaultSuccessUrl("/usr.html").
+ 		anyRequest().authenticated().
+		and().formLogin().loginPage("/login.html").defaultSuccessUrl("/home.html").
 		failureUrl("/loginfailure.html").loginProcessingUrl("/perform_login");
     }
 
 	@Override
 	public void configure(WebSecurity webSecurity) throws Exception {
-		webSecurity.ignoring().antMatchers("/css/*.css").
-		antMatchers("/js/*.js").antMatchers("/login.html").antMatchers("/home.html").antMatchers("/loginfailure.html");
+		webSecurity.ignoring().antMatchers("/css/*.css").antMatchers("/anonymousMenu").antMatchers("/mnu.html").
+		antMatchers("/register.html").antMatchers("/reg").antMatchers("/js/*.js").antMatchers("/login.html").
+		antMatchers("/home.html").antMatchers("/homeContent.html").
+		antMatchers("/anonMenu.html").antMatchers("/loginfailure.html");
     }
 
     @Autowired

@@ -4,14 +4,93 @@
 <title>User Services</title>
 <script src="js/angular.js"></script>
 <script src="js/menu.js"></script>
+<script src="js/channel.js"></script>
 <script>
+
 </script>
 <link rel="stylesheet" href="css/eliga.css">
 </head>
 
 <body ng-app="userApp" onLoad="pickView()">
-<div ng-include="'mnu.html'"></div>
+	<div ng-include="'mnu.html'"></div>
+	<div id="errorMessage"></div>
+	<div ng-controller="ChannelListController">
+		<div id="channel_list" style="visibility: hidden" class="main_div">
+			<div ng-init="listChannels()">
+				{{listResponse}}
+				<table class="eligaTable">
+					<thead>
+						<tr>
+							<th>Channel</th>
+						</tr>
+					</thead>
+					<tr ng-repeat="channel in channels">
+						<td>{{ channel.name }}</td>
+						<td><button ng-click="delete(channel.name)">Delete</button></td>
+						<td><button ng-click="addVideo(channel.name)">Add
+								Video</button></td>
+						<td><button ng-click="listVideos(channel.name)">List
+								videos</button></td>
+					</tr>
+				</table>
+			</div>
+			<div id="add_video" style="visibility: hidden" class="main_div">
+				Add Video to channel {{selectedChannel}}
+				<form method="post" action="/vb/admin/channel/addVideo"  enctype="multipart/form-data" >
+					<input  type="hidden" name="channelName" value="{{selectedChannel}}"/>
+					<table>
+						<tr>
+							<td>Name: <input name="name" /></td>
+						</tr>
+						<tr>
+							<td>File: <input id="videoFile" type="file" name="videoFile" /></td>
+						</tr>
+						<td>
+						<td><input type="button" ng-click="cancelAddVideo()"
+							value="Cancel" /> 
+							<input type="submit"  value="Save" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div id="list_videos" style="visibility: hidden" class="main_div">
+			<h2>Channel {{selectedChannel}} Videos</h2>
+				<table class="eligaTable">
+					<thead>
+						<tr>
+							<th>Channel</th>
+						</tr>
+					</thead>
+					<tr ng-repeat="video in channel.videos">
+						<td>{{ video.name }}</td>
+						<td><button ng-click="viewVideo(video.name)">View</button></td>
+						<td><button ng-click="deleteVideo(selectedChannel,video.name)">Delete</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 
-blah blah blah
+
+	</div>
+	<div id="channel_save" style="visibility: hidden" class="main_div">
+		<div ng-controller="ChannelSaveController">
+			{{saveResponse}}
+			<form id="channel_form">
+				<table>
+					<tr>
+						<td><label>Channel: <input type="text"
+								ng-model="channel.name" /></label></td>
+					</tr>
+					<tr>
+						<td><input type="button" ng-click="save(channel)"
+							value="Save" /></td>
+					</tr>
+					</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
 </body>
 </html>

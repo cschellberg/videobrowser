@@ -1,44 +1,114 @@
 {
-"name":"Menu",
-"roles":["admin","user"],
-"subMenus":[
-	{
-		"name": "User",
-		"subMenus": [
-			{
-				"name": "List",
-				"link": "/vb/usr.html?view=user_list",
-				"roles":["admin"]
-			},
-			{
-				"name": "Register",
-				"link": "/vb/usr.html?view=user_save",
-				"roles":["admin","user"]
-			}
-		],
-		"roles":["admin","user"]
-	},
+	"name": "Menu",
+	"roles": [
+		"admin",
+		"user",
+		"none"
+	],
+	"subMenus": [
 		{
-		"name": "Channels",
-		"subMenus": [
-			{
-				"name": "List",
-				"link": "/vb/channel.html?view=user_list",
-				"roles":["admin","user"]
-			},
-			{
-				"name": "Add Channel",
-				"link": "/vb/channel.html?view=user_save",
-				"roles":["admin","user"]
-			}
-		],
-		"roles":["admin","user"]
-	},
-			{
-		"name": "Logout",
-		"link":"/vb/logout ",
-		"subMenus": [],
-		"roles":["admin","user"]
-	}
-]
+			"name": "Home",
+			"link": "/vb/home.html",
+			"subMenus": [
+			],
+			"roles": [
+				"none"
+			]
+		},
+		{
+			"name": "Home",
+			"link": "/vb/authHome.html",
+			"subMenus": [
+			],
+			"roles": [
+				"admin",
+				"user"
+			]
+		},
+		{
+			"name": "User",
+			"roles": [
+				"admin",
+				"user"
+			],
+			"subMenus": [
+				{
+					"name": "List",
+					"link": "/vb/usr.html?view=user_list",
+					"roles": [
+						"admin"
+					]
+				},
+				{
+					"name": "Register",
+					"link": "/vb/usr.html?view=user_save",
+					"roles": [
+						"admin",
+						"user"
+					]
+				}
+			],
+			"roles": [
+				"admin",
+				"user"
+			]
+		},
+		{
+			"name": "Channels",
+			"roles": [
+				"admin",
+				"user"
+			],
+			"subMenus": [
+				{
+					"name": "List",
+					"link": "/vb/channel.html?view=channel_list",
+					"roles": [
+						"admin",
+						"user"
+					]
+				},
+				{
+					"name": "Add Channel",
+					"link": "/vb/channel.html?view=channel_save",
+					"roles": [
+						"admin",
+						"user"
+					]
+				}
+			],
+			"roles": [
+				"admin",
+				"user"
+			]
+		},
+		{
+			"name": "Logout",
+			"link": "/vb/logout ",
+			"subMenus": [
+			],
+			"roles": [
+				"admin",
+				"user"
+			]
+		},
+		{
+			"name": "Login",
+			"link": "/vb/login.html ",
+			"subMenus": [
+			],
+			"roles": [
+				"none"
+			]
+		},
+		{
+			"name": "Register",
+			"link": "/vb/register.html ",
+			"subMenus": [
+			],
+			"roles": [
+				"none"
+			]
+		}
+	]
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register Page</title>
+<script src="js/angular.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/usr.js"></script>
+<link rel="stylesheet" href="/vb/css/eliga.css">
+</head>
+<body ng-app="userApp" onLoad="pickView()"">
+	<div ng-include="'anonMenu.html'"></div>
+	<div ng-controller="UserController" class="main_div">
+		{{saveResponse}}
+		<form id="user_form">
+			<table>
+				<tr>
+					<td><label>First Name: <input type="text"
+							ng-model="user.firstName" /></label></td>
+				</tr>
+				<tr>
+					<td><label>Last Name: <input type="text"
+							ng-model="user.lastName" /></label></td>
+				</tr>
+				<tr>
+					<td><label>User Name: <input type="text"
+							ng-model="user.username" /></label></td>
+				</tr>
+				<tr>
+					<td><label>Password: <input type="text"
+							ng-model="user.password" /></label></td>
+				</tr>
+				<tr>
+					<td><input type="button" ng-click="register(user)" value="Save" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</body>
+</html>

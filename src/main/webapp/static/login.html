@@ -2,9 +2,12 @@
 <html>
 <head>
 <title>Login Page</title>
+<script src="js/angular.js"></script>
+<script src="js/menu.js"></script>
 <link rel="stylesheet" href="/vb/css/eliga.css">
 </head>
-<body>
+<body ng-app="userApp" onLoad="pickView()"">
+	<div ng-include="'anonMenu.html'"></div>
 	<div class="main_div">
 		<h3>Login with Username and Password</h3>
 		<form name='f' action='/vb/perform_login' method='POST'>

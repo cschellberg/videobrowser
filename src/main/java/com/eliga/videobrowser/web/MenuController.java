@@ -62,4 +62,9 @@ public class MenuController {
 			return menuMap.get(ROLE.none);
 		}
 	}
+
+	@RequestMapping(value = "/anonymousMenu", method = RequestMethod.GET)
+	public @ResponseBody Menu getAnonymousMenu() {
+		return menuMap.get(ROLE.none);
+	}
 }
