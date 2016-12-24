@@ -12,6 +12,30 @@
 			}, function myError(response) {
 				$scope.users = response.text;
 			});
+		}		
+		$scope.add = function() {
+			$scope.showListView(false)
+		}
+		$scope.edit = function(userName) {
+			$http.get("/vb/user/"+userName).then(function mySuccess(response) {
+				$scope.user = response.data;
+			}, function myError(response) {
+				$scope.user = response.text;
+			});
+			$scope.showListView(false)
+		}
+		$scope.showListView = function(show) {
+			if ( show ){
+				var viewElement = document.getElementById("user_list");
+				viewElement.style.visibility = "visible";
+				viewElement = document.getElementById("user_enter");
+				viewElement.style.visibility = "hidden";
+			}else {
+				var viewElement = document.getElementById("user_list");
+				viewElement.style.visibility = "hidden";
+				viewElement = document.getElementById("user_enter");
+				viewElement.style.visibility = "visible";
+			}
 		}
 		$scope.delete = function(username) {
 			$http.delete("/vb/admin/user/delete/"+username).then(function mySuccess(response) {
@@ -25,12 +49,10 @@
 				$scope.listResponse = response.statusText;
 			});
 		}
-	});
-
-	userApp.controller('UserSaveController', function($scope, $http) {
+		
 		$scope.save = function(user) {
 			$scope.saveResponse="";
-			var url="/vb/user"
+			var url="/vb/admin/user"
 			var config = {
 	                headers : {
 	                    'Content-Type': 'application/json'
@@ -41,23 +63,28 @@
 			   .then(
 			       function(response){
 			    	   $scope.saveResponse = response.data;
+			    	   $scope.showListView(true)
+					   window.location.reload();
 			       }, 
 			       function(response){
 			    	   $scope.saveResponse =  response.error;
 			       }
 			    );
 		}
+		
 	});
+
+
 </script>
 <link rel="stylesheet" href="css/eliga.css">
 </head>
 
 <body ng-app="userApp" onLoad="pickView()">
-<div ng-include="'mnu.html'"></div>
+	<div ng-include="'mnu.html'"></div>
+	<div ng-controller="UserListController" ng-init="listUsers()">
 
-	<div id="user_list" style="visibility: hidden" class="main_div">
-		<div ng-controller="UserListController" ng-init="listUsers()">
-{{listResponse}}
+		<div id="user_list" style="visibility: hidden" class="main_div">
+			{{listResponse}}
 			<table class="eligaTable">
 				<thead>
 					<tr>
@@ -66,6 +93,8 @@
 						<th>User Name</th>
 						<th>Password</th>
 						<th>Role</th>
+						<th></th>
+						<th><button ng-click="add()">Add</button></th>
 					</tr>
 				</thead>
 				<tr ng-repeat="user in users">
@@ -75,22 +104,38 @@
 					<td>{{user.password}}</td>
 					<td>{{user.role}}</td>
 					<td><button ng-click="delete(user.username)">Delete</button></td>
+					<td><button ng-click="edit(user.username)">Edit</button></td>
+
 				</tr>
 			</table>
 		</div>
-	</div>
 
-	<div id="user_save" style="visibility: hidden" class="main_div">
-		<div ng-controller="UserSaveController">
-		{{saveResponse}}
-			<form id="user_form"  >
-			<table>
-			  <tr><td><label>First Name: <input type="text" ng-model="user.firstName" /></label></td></tr>
-				<tr><td><label>Last Name: <input type="text" ng-model="user.lastName" /></label></td></tr> 
-				<tr><td><label>User Name: <input type="text" ng-model="user.username" /></label></td></tr> 
-				<tr><td><label>Password: <input type="text" ng-model="user.password" /></label></td></tr> 
-				<tr><td><input type="button"  ng-click="save(user)" value="Save" /></td></tr>
-			</table>	
+		<div id="user_enter" style="visibility: hidden" class="main_div">
+			{{saveResponse}}
+			<form id="user_form">
+				<table>
+					<tr>
+						<td><label>First Name: <input type="text"
+								ng-model="user.firstName" /></label></td>
+					</tr>
+					<tr>
+						<td><label>Last Name: <input type="text"
+								ng-model="user.lastName" /></label></td>
+					</tr>
+					<tr>
+						<td><label>User Name: <input type="text"
+								ng-model="user.username" /></label></td>
+					</tr>
+					<tr>
+						<td><label>Password: <input type="text"
+								ng-model="user.password" /></label></td>
+					</tr>
+					<tr>
+						<td>
+						<input type="button" ng-click="showListView(true)" value="Cancel" />
+						<input type="button" ng-click="save(user)" value="Save" /></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>

@@ -32,12 +32,12 @@ public class VideoBrowserTester {
 			String responseStr = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
 			System.out.println(responseStr);
 			
-			httpPost = new HttpPost("http://localhost:8080/vb/user");
+			httpPost = new HttpPost("http://localhost:8080/vb/admin/user");
 			User user = new User();
-			user.setFirstName("Don");
-			user.setLastName("Schellberg");
-			user.setUsername("dschellberg");
-			user.setPassword("blah");
+			user.setFirstName("admin");
+			user.setLastName("admin");
+			user.setUsername("admin");
+			user.setPassword("admin");
 			user.setRole(ROLE.admin.toString());
 			httpPost.addHeader("accept", "application/json");
 			httpPost.addHeader("content-type", "application/json");
@@ -48,12 +48,12 @@ public class VideoBrowserTester {
 			response=client.execute(httpPost);
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
-			httpPost = new HttpPost("http://localhost:8080/vb/user");
+			httpPost = new HttpPost("http://localhost:8080/vb/admin/user");
 			user = new User();
-			user.setFirstName("Chris");
-			user.setLastName("Schellberg");
-			user.setUsername("cschellberg");
-			user.setPassword("blah");
+			user.setFirstName("user");
+			user.setLastName("user");
+			user.setUsername("user");
+			user.setPassword("user");
 			user.setRole(ROLE.user.toString());
 			httpPost.addHeader("accept", "application/json");
 			httpPost.addHeader("content-type", "application/json");
@@ -74,11 +74,33 @@ public class VideoBrowserTester {
 
 			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
 			Channel channel = new Channel();
-			channel.setName("Test Channel");
-			Video video=new Video();
-			video.setName("videoname");
-			video.setLink("videolink");
-			channel.getVideos().add(video);
+			channel.setName("Dogs");
+			httpPost.addHeader("accept", "application/json");
+			httpPost.addHeader("content-type", "application/json");
+			gson = new Gson();
+			jsonStr = gson.toJson(channel);
+			entity = new StringEntity(jsonStr);
+			httpPost.setEntity(entity);
+			response=client.execute(httpPost);
+			responseStr=IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+			System.out.println(responseStr);
+
+			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			channel = new Channel();
+			channel.setName("Cats");
+			httpPost.addHeader("accept", "application/json");
+			httpPost.addHeader("content-type", "application/json");
+			gson = new Gson();
+			jsonStr = gson.toJson(channel);
+			entity = new StringEntity(jsonStr);
+			httpPost.setEntity(entity);
+			response=client.execute(httpPost);
+			responseStr=IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+			System.out.println(responseStr);
+
+			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			channel = new Channel();
+			channel.setName("Horses");
 			httpPost.addHeader("accept", "application/json");
 			httpPost.addHeader("content-type", "application/json");
 			gson = new Gson();

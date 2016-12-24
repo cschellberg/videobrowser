@@ -1,0 +1,32 @@
+<html>
+
+<head>
+<title>User Services</title>
+<script src="js/angular.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/channel.js"></script>
+<script>
+
+</script>
+<link rel="stylesheet" href="css/eliga.css">
+</head>
+
+<body ng-app="userApp" onLoad="pickView()">
+	<div ng-include="'mnu.html'"></div>
+	<div id="errorMessage"></div>
+	<div ng-controller="ChannelListController" id="video_list"
+		class="main_div" ng-init="listChannels()">
+		{{listResponse}}
+		<div ng-repeat="channel in channels"><h2>{{ channel.name }}</h2>
+		<div ng-repeat="video in channel.videos">
+		<h3>{{video.name}}</h3>
+		<video width="320" height="240" controls>
+  <source ng-src="/vb/channel/getVideo/{{ channel.name }}/{{video.name}}" type="video/mp4">
+ 
+</video>
+		</div>
+		</div>
+	</div>
+
+</body>
+</html>

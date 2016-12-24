@@ -15,14 +15,14 @@ import javax.persistence.OneToMany;
 @Entity
 public class Channel {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-	
-	@Column(unique=true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column(unique = true)
 	private String name;
 
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private List<Video> videos=new ArrayList<Video>();
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Video> videos = new ArrayList<Video>();
 
 	public Long getId() {
 		return id;
@@ -47,7 +47,14 @@ public class Channel {
 	public void setVideos(List<Video> videos) {
 		this.videos = videos;
 	}
-	
-	
+
+	public Video getVideo(String videoName) {
+		for (Video tmpVideo : getVideos()) {
+			if (tmpVideo.getName().equals(videoName)) {
+				return tmpVideo;
+			}
+		}
+		return null;
+	}
 
 }

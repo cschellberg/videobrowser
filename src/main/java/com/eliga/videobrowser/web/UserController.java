@@ -7,6 +7,9 @@ import java.util.List;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eliga.videobrowser.model.Menu;
 import com.eliga.videobrowser.model.Result;
 import com.eliga.videobrowser.model.User;
 import com.eliga.videobrowser.repository.UserRepository;
@@ -26,13 +30,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/user/{username:.+}", method = RequestMethod.GET)
 	public @ResponseBody User getUser(@PathVariable("username") String username) {
-		User user=new User();
-		user.setUsername(username);
+		User user=userRepository.findByUsername(username);
 		return user;
 	}
 	
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/user", method = RequestMethod.POST)
 	public @ResponseBody Result saveUser(@RequestBody User user) throws Exception {
 		try
 		{
@@ -43,6 +46,17 @@ public class UserController {
 			return new Result(1,ex.getMessage());
 		}
 	}
+	
+	@RequestMapping(value = "/getLoggedInUser", method = RequestMethod.GET)
+	public @ResponseBody User getLoggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			return userRepository.findByUsername(auth.getName());
+		} else {
+			return new User();
+		}
+	}
+
 	
 	@RequestMapping(value = "/reg", method = RequestMethod.POST)
 	public @ResponseBody Result registerUser(@RequestBody User user) throws Exception {
@@ -79,7 +93,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/user/deleteAll", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/user/deleteAll", method = RequestMethod.GET)
 	public @ResponseBody String deleteAll() {
 		userRepository.deleteAll();
 		long count=userRepository.count();
@@ -97,9 +111,5 @@ public class UserController {
 	}
 	
 
- /*   @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login.html";
-    }*/
 
 }

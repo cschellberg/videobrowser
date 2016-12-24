@@ -1,46 +1,49 @@
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
- // if (!event.target.matches('.dropbtn')) {
-    var buttonParentId = event.srcElement.parentElement.id;
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      var dropdownParentId = openDropdown.parentElement.id;
-      if (openDropdown.classList.contains('show') && (buttonParentId != dropdownParentId)) {
-        openDropdown.classList.remove('show');
-      }
-    }
-// } 
-}
-
-
-
-function pickView() {
-	var locationUrl = window.location.search;
-	var paramIndex = locationUrl.indexOf("view");
-	var view = "";
-	if (paramIndex >= 0) {
-		locationUrl = locationUrl.substring(paramIndex);
-		var viewParam = locationUrl.split("&")[0];
-		var viewParamParts = viewParam.split("=");
-		if (viewParamParts.length > 1) {
-			view = viewParamParts[1];
+	// if (!event.target.matches('.dropbtn')) {
+	var buttonParentId = event.srcElement.parentElement.id;
+	var dropdowns = document.getElementsByClassName("dropdown-content");
+	var i;
+	for (i = 0; i < dropdowns.length; i++) {
+		var openDropdown = dropdowns[i];
+		var dropdownParentId = openDropdown.parentElement.id;
+		if (openDropdown.classList.contains('show')
+				&& (buttonParentId != dropdownParentId)) {
+			openDropdown.classList.remove('show');
 		}
 	}
-		viewElement = document.getElementById(view);
-		if ( viewElement != null ){
-		viewElement.style.visibility = "visible";
-		}
-   paramIndex = locationUrl.indexOf("errorMessage");
-	if (paramIndex >= 0) {
-		var errorParam = locationUrl.split("&")[1];
-		var errorParamParts = errorParam.split("=");
-		if (errorParamParts.length > 1) {
-			errorMessage = decodeURIComponent(errorParamParts[1]);
-		    document.getElementById("errorMessage").innerHTML=errorMessage;
-		}
+	// }
+}
 
+function getParameter(str, name) {
+	var parameterChunks = str.split(/[&?]+/);
+	for (ii = 0; ii < parameterChunks.length; ii++) {
+		var parameterChunk = parameterChunks[ii];
+		if (parameterChunk.indexOf(name) >= 0) {
+			parameterParts = parameterChunk.split("=");
+			if (parameterParts.length > 1) {
+				return parameterParts[1];
+			}
+		}
+	}
+	return "";
+}
+
+function pickView() {
+	var locationUrl = window.location.search
+	pickAView(locationUrl);
+}
+
+function pickAView(urlStr) {
+	var view = getParameter(urlStr, "view")
+	viewElement = document.getElementById(view);
+	if (viewElement != null) {
+		viewElement.style.visibility = "visible";
+	}
+	var errorMessage = decodeURIComponent(getParameter(urlStr, "errorMessage"));
+	var viewElement = document.getElementById("errorMessage")
+	if (viewElement != null) {
+		viewElement.innerHTML = errorMessage;
 	}
 }
 
@@ -54,11 +57,11 @@ userApp.controller('AnonymousMenuController', function($scope, $http) {
 			$scope.menu = response.text;
 		});
 	}
-	$scope.dropDown= function (index) {
-	    document.getElementById('dd'+index).classList.toggle("show");
+	$scope.dropDown = function(index) {
+		document.getElementById('dd' + index).classList.toggle("show");
 	}
-	$scope.goTo= function (url) {
-	    window.location.href=url;
+	$scope.goTo = function(url) {
+		window.location.href = url;
 	}
 });
 
@@ -70,11 +73,10 @@ userApp.controller('MenuController', function($scope, $http) {
 			$scope.menu = response.text;
 		});
 	}
-	$scope.dropDown= function (index) {
-	    document.getElementById('dd'+index).classList.toggle("show");
+	$scope.dropDown = function(index) {
+		document.getElementById('dd' + index).classList.toggle("show");
 	}
-	$scope.goTo= function (url) {
-	    window.location.href=url;
+	$scope.goTo = function(url) {
+		window.location.href = url;
 	}
 });
-

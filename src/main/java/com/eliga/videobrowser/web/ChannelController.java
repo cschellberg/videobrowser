@@ -1,13 +1,20 @@
 package com.eliga.videobrowser.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,8 +113,8 @@ public class ChannelController {
 			@PathVariable("video") String videoName) {
 		Channel channel = channelRepository.findByName(channelName);
 		if (channel != null) {
-			for ( Video video: channel.getVideos()){
-				if ( videoName.equals(video.getName())){
+			for (Video video : channel.getVideos()) {
+				if (videoName.equals(video.getName())) {
 					channel.getVideos().remove(video);
 					channelRepository.save(channel);
 					return new Result(0, "success");
@@ -116,6 +123,31 @@ public class ChannelController {
 			return new Result(1, "video not found");
 		} else {
 			return new Result(1, "channel not found");
+		}
+	}
+
+	@RequestMapping(value = "/channel/getVideo/{channelName:.+}/{video:.+}", method = RequestMethod.GET)
+	@ResponseBody
+	public void getVideo(@PathVariable("channelName") String channelName, @PathVariable("video") String videoName,
+			HttpServletResponse response) {
+		try {
+			Channel channel = channelRepository.findByName(channelName);
+			if (channel != null) {
+				Video video = channel.getVideo(videoName);
+				if (video != null) {
+					File file = new File(video.getLink());
+					response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+					response.setHeader("Content-Disposition",
+							"attachment; filename=" + file.getName().replace(" ", "_"));
+					InputStream iStream = new FileInputStream(file);
+					IOUtils.copy(iStream, response.getOutputStream());
+					response.flushBuffer();
+				}
+			}
+		} catch (NoSuchFileException e) {
+			response.setStatus(404);
+		} catch (Exception e) {
+			response.setStatus(500);
 		}
 	}
 

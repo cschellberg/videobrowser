@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	httpSecurity.csrf().disable().authorizeRequests().
   		antMatchers("/admin/**").hasAuthority(ROLE.admin.toString()).
  		anyRequest().authenticated().
-		and().formLogin().loginPage("/login.html").defaultSuccessUrl("/home.html").
+		and().formLogin().loginPage("/login.html").defaultSuccessUrl("/authHome.html").
 		failureUrl("/loginfailure.html").loginProcessingUrl("/perform_login");
     }
 

@@ -33,31 +33,21 @@
 			],
 			"subMenus": [
 				{
-					"name": "List",
+					"name": "Administer",
 					"link": "/vb/usr.html?view=user_list",
 					"roles": [
 						"admin"
 					]
-				},
-				{
-					"name": "Register",
-					"link": "/vb/usr.html?view=user_save",
-					"roles": [
-						"admin",
-						"user"
-					]
 				}
 			],
 			"roles": [
-				"admin",
-				"user"
+				"admin"
 			]
 		},
 		{
 			"name": "Channels",
 			"roles": [
-				"admin",
-				"user"
+				"admin"
 			],
 			"subMenus": [
 				{
@@ -76,6 +66,25 @@
 						"user"
 					]
 				}
+			],
+			"roles": [
+				"admin"
+			]
+		},
+		{
+			"name": "Edit Account",
+			"link": "/vb/editAccount.html",
+			"subMenus": [
+			],
+			"roles": [
+				"admin",
+				"user"
+			]
+		},
+		{
+			"name": "View Videos",
+			"link": "/vb/videos.html",
+			"subMenus": [
 			],
 			"roles": [
 				"admin",
@@ -103,7 +112,7 @@
 		},
 		{
 			"name": "Register",
-			"link": "/vb/register.html ",
+			"link": "/vb/register.html",
 			"subMenus": [
 			],
 			"roles": [
