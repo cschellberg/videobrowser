@@ -74,6 +74,9 @@ jettyRunWar{
 	httpPort = 8080
 }
 
+war {
+    archiveName = 'vb.war'
+}
 //For Eclipse IDE only
 eclipse {
 

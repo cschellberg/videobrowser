@@ -1,7 +1,5 @@
 package com.eliga.videobrowser.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -21,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class VideoService {
 
 	// @Value("#{base.video.dir}")
-	private String baseVideoDir = "/videos";
+	private String baseVideoDir = "/videobrowser/videos";
 
 	public String saveVideoToDisk(String channelName, String name, String fileName, InputStream inputStream)
 			throws IOException {

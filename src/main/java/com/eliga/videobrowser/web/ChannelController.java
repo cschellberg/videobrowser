@@ -8,10 +8,13 @@ import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +38,7 @@ import com.eliga.videobrowser.service.VideoService;
 @Controller
 public class ChannelController {
 
+	private static Logger logger = LoggerFactory.getLogger(ChannelController.class);
 	@Autowired
 	ChannelRepository channelRepository;
 

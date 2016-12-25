@@ -21,10 +21,11 @@ public class VideoBrowserTester {
 
 	public static void main(String[] args) {
 		try {
+			String host="http://localhost:8080";
 			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 			CloseableHttpClient client = httpClientBuilder.build();
 
-			HttpPost httpPost = new HttpPost("http://localhost:8080/vb/perform_login");
+			HttpPost httpPost = new HttpPost(host+"/vb/perform_login");
 			String loginStr="username=dschellberg&password=blah";
 			HttpEntity entity = new StringEntity(loginStr);
 			httpPost.setEntity(entity);
@@ -32,7 +33,7 @@ public class VideoBrowserTester {
 			String responseStr = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
 			System.out.println(responseStr);
 			
-			httpPost = new HttpPost("http://localhost:8080/vb/admin/user");
+			httpPost = new HttpPost(host+"/vb/admin/user");
 			User user = new User();
 			user.setFirstName("admin");
 			user.setLastName("admin");
@@ -48,7 +49,7 @@ public class VideoBrowserTester {
 			response=client.execute(httpPost);
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
-			httpPost = new HttpPost("http://localhost:8080/vb/admin/user");
+			httpPost = new HttpPost(host+"/vb/admin/user");
 			user = new User();
 			user.setFirstName("user");
 			user.setLastName("user");
@@ -64,7 +65,7 @@ public class VideoBrowserTester {
 			response=client.execute(httpPost);
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
-			String url = "http://localhost:8080/vb/admin/user/list";
+			String url = host+"/vb/admin/user/list";
 			HttpGet request = new HttpGet(url);
 			request.addHeader("accept", "application/json");
 			request.addHeader("content-type", "application/json");
@@ -72,7 +73,7 @@ public class VideoBrowserTester {
 			System.out.println(IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset()));
 
 
-			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			httpPost = new HttpPost(host+"/vb/admin/channel");
 			Channel channel = new Channel();
 			channel.setName("Dogs");
 			httpPost.addHeader("accept", "application/json");
@@ -85,7 +86,7 @@ public class VideoBrowserTester {
 			responseStr=IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
 			System.out.println(responseStr);
 
-			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			httpPost = new HttpPost(host+"/vb/admin/channel");
 			channel = new Channel();
 			channel.setName("Cats");
 			httpPost.addHeader("accept", "application/json");
@@ -98,7 +99,7 @@ public class VideoBrowserTester {
 			responseStr=IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
 			System.out.println(responseStr);
 
-			httpPost = new HttpPost("http://localhost:8080/vb/admin/channel");
+			httpPost = new HttpPost(host+"/vb/admin/channel");
 			channel = new Channel();
 			channel.setName("Horses");
 			httpPost.addHeader("accept", "application/json");
